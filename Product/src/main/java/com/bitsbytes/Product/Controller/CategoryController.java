@@ -29,8 +29,10 @@ public class CategoryController {
     }
     //Create categories
     @PostMapping
-    public ResponseEntity<CategoryDTO> createCategory(@RequestBody CategoryDTO categoryDTO){
-        return new ResponseEntity<>(categoryService.createCategory(categoryDTO), HttpStatus.CREATED);
+    public ResponseEntity<?> createCategory(@RequestBody CategoryDTO categoryDTO){
+        CategoryDTO savedCategory = categoryService.createCategory(categoryDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedCategory);
+        // return new ResponseEntity<>(categoryService.createCategory(categoryDTO), HttpStatus.CREATED);
     }
     //Get category by ID
     @GetMapping("/{id}")

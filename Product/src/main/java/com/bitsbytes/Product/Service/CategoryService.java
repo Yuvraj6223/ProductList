@@ -1,8 +1,10 @@
 package com.bitsbytes.Product.Service;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.stereotype.Service;
 import com.bitsbytes.Product.Dto.CategoryDTO;
 import com.bitsbytes.Product.entity.Category;
+import com.bitsbytes.Product.exception.CategoryAlreadyExistsException;
 import com.bitsbytes.Product.Mapper.CategoryMapper;
 import com.bitsbytes.Product.Repository.CategoryRepository;
 
@@ -15,6 +17,11 @@ public class CategoryService {
     private CategoryRepository categoryRepository;
     //Create category
     public CategoryDTO createCategory(CategoryDTO categoryDTO){
+        
+        Optional<Category> optionalCategory = categoryRepository.findByName(categoryDTO.getName());
+        if(optionalCategory.isPresent()){
+            throw new CategoryAlreadyExistsException("Category already exists");
+        }
         Category category = CategoryMapper.toCategoryEntity(categoryDTO);
         category = categoryRepository.save(category);
         return CategoryMapper.toCategoryDTO(category);

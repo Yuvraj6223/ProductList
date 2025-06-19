@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import com.bitsbytes.Product.Dto.ProductDTO;
 import com.bitsbytes.Product.entity.Product;
+import com.bitsbytes.Product.exception.CategoryNotFoundException;
 import com.bitsbytes.Product.Mapper.ProductMapper;
 import com.bitsbytes.Product.Repository.CategoryRepository;
 import com.bitsbytes.Product.Repository.ProductRepository;
@@ -18,7 +19,7 @@ public class ProductService {
         public ProductDTO createProduct(ProductDTO productDTO){
 
             Category category = categoryRepository.findById(productDTO.getCategoryId())
-                .orElseThrow(() -> new RuntimeException("Category not found"));
+                .orElseThrow(() -> new CategoryNotFoundException("Category id "+ productDTO.getCategoryId()+" not found"));
 
             //DTO to Entity
             Product product = ProductMapper.toProductEntity(productDTO, category);
