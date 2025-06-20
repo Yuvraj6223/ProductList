@@ -1,9 +1,14 @@
 package com.bitsbytes.Product.Dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Schema(
+    name = "Products",
+    description = "It holds product information"
+)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
